@@ -12,7 +12,7 @@ public class Server implements AutoCloseable {
 
     public Server(String host, int port, int backlogConnectionQueueLength) throws UnknownHostException, IOException {
         server = new ServerSocket(port, backlogConnectionQueueLength, InetAddress.getByName(host));
-        System.out.println(Thread.currentThread() + " Created Server");
+        System.out.println(Thread.currentThread() + " Server Created");
     }
 
     public void start() {
@@ -35,7 +35,7 @@ public class Server implements AutoCloseable {
         System.out.println(Thread.currentThread() + " Received Connection from " + clientSocket);
         BufferedReader is = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         PrintStream os = new PrintStream(clientSocket.getOutputStream());
-        // echo that data back to the client, except for QUIT.
+        
         String line = null;
         while ((line = is.readLine()) != null) {
             System.out.println(Thread.currentThread() + " Server Got => " + line);
@@ -59,7 +59,7 @@ public class Server implements AutoCloseable {
     }
 
     public static void main(String[] args) {
-        try (Server server = new Server("localhost", 8080, 50)) {
+        try (Server server = new Server("localhost", 5050, 50)) {
             server.start();
         } catch (IOException e) {
             System.out.println(e);
